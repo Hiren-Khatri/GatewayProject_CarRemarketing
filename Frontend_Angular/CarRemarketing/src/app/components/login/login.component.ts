@@ -12,31 +12,63 @@ export class LoginComponent implements OnInit {
     password: '',
   };
 
+  userRegitrationDetails = {
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+  };
+
   constructor(private loginService: LoginService) {}
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  onLoginSubmit() {
     if (
-      this.credentials.username != '' &&
-      this.credentials.password != '' &&
-      this.credentials.username != null &&
-      this.credentials.password != null
+      this.checkForNonEmptyOrNotNull(this.credentials.username) &&
+      this.checkForNonEmptyOrNotNull(this.credentials.password)
     ) {
       //submit the form
       this.loginService.generateToken(this.credentials).subscribe(
-        (response:any) => {
+        (response: any) => {
           //success
           this.loginService.loginUser(response.token);
-          window.location.href="/dashboard"; 
+          window.location.href = '/dashboard';
         },
         (error) => {
           //error
-          console.log(error)
+          console.log(error);
+          if(error.status == 401){
+            alert("Invalid Email or Password!!!")
+          }
         }
       );
     } else {
-      console.log('Fields are empty!!');
+      alert('Fields are empty!!');
+    }
+  }
+
+  onRegisterSubmit() {
+    if (
+      this.checkForNonEmptyOrNotNull(this.userRegitrationDetails.name) &&
+      this.checkForNonEmptyOrNotNull(this.userRegitrationDetails.email) &&
+      this.checkForNonEmptyOrNotNull(this.userRegitrationDetails.password) &&
+      this.checkForNonEmptyOrNotNull(this.userRegitrationDetails.phone) &&
+      this.userRegitrationDetails.confirmPassword ==
+        this.userRegitrationDetails.password
+    ) {
+      console.log(this.userRegitrationDetails);
+    } else {
+      alert('Empty Field');
+    }
+  }
+
+  checkForNonEmptyOrNotNull(value: any) {
+    if (value == '' || value == null || value == undefined) {
+      return false;
+    } else {
+      return true;
     }
   }
 }

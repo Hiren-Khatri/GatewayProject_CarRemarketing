@@ -2,6 +2,6 @@
     <span><a mat-icon-button routerLink="/">Car Remarketing</a></span>
     <span class="shift-right-side"></span>
     <a *ngIf="!loggedIn" mat-icon-button routerLink="/login">Login</a>
-    <a *ngIf="loggedIn" mat-icon-button>User</a>
+    <a *ngIf="loggedIn" mat-icon-button class="marginRight10">{{name}}</a>
     <a *ngIf="loggedIn" (click)="logoutUser()" mat-icon-button>Logout</a>
 </mat-toolbar>

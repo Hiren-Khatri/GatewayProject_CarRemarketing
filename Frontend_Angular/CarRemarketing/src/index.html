@@ -15,9 +15,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
       $(document).ready(function () {
+        $(".container").height(450)
         $(".register-form").hide();
         $(".login").css("color", "#34b3a0");
         $(".register").click(function () {
+          $(".container").height(650)
           $(".login-form").hide();
           $(".register-form").show();
           $(".login").css("color", "#3e3e40");
@@ -26,6 +28,7 @@
           $(".login").css("font-weight", "none");
         });
         $(".login").click(function () {
+          $(".container").height(450)
           $(".register-form").hide();
           $(".login-form").show();
           $(".login").css("color", "#34b3a0");

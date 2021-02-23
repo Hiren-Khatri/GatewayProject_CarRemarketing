@@ -1,16 +1,16 @@
 <div class="container">
   <div class="login">Login</div>
   <div class="register">Register</div>
-
+<!-- login form start -->
   <div class="login-form">
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onLoginSubmit()">
       <input
         [(ngModel)]="credentials.username"
         type="email"
         name="username"
         placeholder="Email Address"
         class="input"
-        required=""
+        required
       /><br />
       <input
         [(ngModel)]="credentials.password"
@@ -18,17 +18,20 @@
         name="password"
         placeholder="Password"
         class="input"
-        required=""
+        required
       /><br />
       <div class="btn">
         <button type="submit">Login</button>
       </div>
     </form>
   </div>
+<!-- login form end -->
 
+<!-- register form start -->
   <div class="register-form">
-    <form method="POST" action="#">
+    <form (ngSubmit)="onRegisterSubmit()">
       <input
+        [(ngModel)]="userRegitrationDetails.email"
         type="email"
         name="email"
         placeholder="Email Address"
@@ -36,9 +39,34 @@
         required=""
       /><br />
       <input
+        [(ngModel)]="userRegitrationDetails.name"
+        type="text"
+        name="name"
+        placeholder="Name"
+        class="input"
+        required=""
+      /><br />
+      <input
+        [(ngModel)]="userRegitrationDetails.phone"
+        type="tel"
+        name="phoneNumber"
+        placeholder="Phone Number"
+        class="input"
+        required=""
+      /><br />
+      <input
+        [(ngModel)]="userRegitrationDetails.password"
         type="password"
         name="password"
         placeholder="Password"
+        class="input"
+        required=""
+      /><br />
+      <input
+        [(ngModel)]="userRegitrationDetails.confirmPassword"
+        type="password"
+        name="confirmPassword"
+        placeholder="Confirm Password"
         class="input"
         required=""
       /><br />
@@ -47,4 +75,5 @@
       </div>
     </form>
   </div>
+  <!-- register form end -->
 </div>

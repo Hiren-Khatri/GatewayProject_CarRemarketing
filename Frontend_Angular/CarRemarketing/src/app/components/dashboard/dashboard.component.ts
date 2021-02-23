@@ -10,9 +10,11 @@ export class DashboardComponent implements OnInit {
 
   user:any={}
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getUserDetails();
+  }
 
   getUserDetails() {
     this.userService.getUserDetails().subscribe(
@@ -20,6 +22,7 @@ export class DashboardComponent implements OnInit {
         //success
         console.log(response);
         this.user = response;
+        localStorage.setItem('name',this.user.name);
       },
       (error) => {
         //error
