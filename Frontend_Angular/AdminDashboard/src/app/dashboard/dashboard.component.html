@@ -1,0 +1,27 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-grid-list cols="6" fxLayout="column" fxLayoutAlign="space-around start" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card  class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <h1 class="mat-display-4">{{ card.title }}</h1>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<div class="brands">
+  <mat-list>
+    <mat-list-item *ngFor="let brand of brands">
+      <h3 matLine> {{ brand.name }} </h3>
+      <p matLine> {{ brand.shortDiscription }} </p>
+      <button mat-raised-button (click)="deleteBrand(brand.id)" color="warn">Delete</button>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>

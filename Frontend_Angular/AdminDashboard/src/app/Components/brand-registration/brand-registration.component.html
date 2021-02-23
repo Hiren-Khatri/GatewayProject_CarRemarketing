@@ -1,0 +1,23 @@
+<div class="main-container">
+    <div class="form-heading"> 
+        <h1>Register Brand</h1>
+    </div>
+    <div class="main-wrappxper" fxLayout="row" fxLayoutAlign="start">
+        <form  [formGroup]="brandForm" class="example-form" >
+            <div class="example-container" fxLayoutGap="32px">
+                <mat-form-field appearance="fill" [style.width.px]=327>
+                    <mat-label>Enter Brand</mat-label>
+                    <input matInput placeholder="Brand Name" id="name" [(ngModel)]="brand.name"  formControlName="name">
+                </mat-form-field>
+                <mat-form-field appearance="fill" [style.width.px]=327>
+                    <mat-label>About Brand</mat-label>
+                    <textarea matInput id="about" [(ngModel)]="brand.shortDiscription"  formControlName="shortDiscription"></textarea>
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                    <button mat-stroked-button color="primary" class="btn-block" (click)="onSubmit()">Add Brand</button>
+                    <button mat-stroked-button color="accent" class="btn-block" (click)="onUpdate()">Update</button>
+                </div>  
+            </div>
+        </form>
+    </div>
+</div> 

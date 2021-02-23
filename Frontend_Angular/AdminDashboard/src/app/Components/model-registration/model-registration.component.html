@@ -1,0 +1,37 @@
+<div class="main-container"> 
+    <div class="form-heading"> 
+        <h1>Register Model</h1> 
+    </div>
+    <div class="main-wrappxper" fxLayout="row" fxLayoutAlign="start">
+        <form  [formGroup]="modelForm" class="example-form">
+            <div class="example-container" fxLayoutGap="32px">
+                <mat-form-field appearance="fill" [style.width.px]=327>
+                    <mat-label>Brand</mat-label>
+                    <mat-select formControlName="brandId">
+                        <mat-option  *ngFor="let brand of brands" [value]="brand.id">
+                             {{ brand.name }}
+                         </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" [style.width.px]=327>
+                    <mat-label>Enter Model</mat-label>
+                    <input matInput placeholder="Model Name" formControlName="name" [(ngModel)]="model.name">
+                </mat-form-field>
+            </div>
+            <div class="example-container" fxLayoutGap="32px">
+                <mat-form-field appearance="fill" [style.width.px]=327>
+                    <mat-label>About Model</mat-label>
+                    <textarea matInput formControlName="shortDiscription" [(ngModel)]="model.shortDiscription"></textarea>
+                </mat-form-field>
+                <mat-form-field appearance="fill" [style.width.px]=327>
+                    <mat-label>Model Year</mat-label>
+                    <input matInput placeholder="Model Year" formControlName="modelYear"[(ngModel)]="model.modelYear">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="space-evenly center">
+                    <button mat-stroked-button color="primary" class="btn-block" (click)="onSubmit()">Add Model</button>
+                    <button mat-stroked-button color="accent" class="btn-block" (click)="onUpdate()">Update</button>
+                </div>   
+            </div>
+        </form>
+    </div>
+</div> 
