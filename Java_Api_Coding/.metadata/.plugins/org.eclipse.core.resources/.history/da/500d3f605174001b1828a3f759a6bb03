@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.gateway.traineeproject.model.Brand;
+import com.gateway.traineeproject.service.BrandService;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+
+@RestController
+public class BrandController {
+	@Autowired
+	private BrandService brandService;
+	
+	@GetMapping("/brand")
+	public List<Brand> getAllBrands(){
+		return brandService.findAll();
+	}
+}

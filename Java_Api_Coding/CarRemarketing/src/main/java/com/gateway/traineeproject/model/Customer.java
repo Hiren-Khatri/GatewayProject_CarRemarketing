@@ -3,10 +3,16 @@
  */
 package com.gateway.traineeproject.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author Hiren Khatri
@@ -16,14 +22,25 @@ import javax.persistence.Table;
 @Table(name = "Customer")
 public class Customer {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY	)
 	private long id;
+	
 	@Column(name = "Name")
+	@Size(max = 55,message = "Name Should be less than 55 characters")
+	@NotNull
 	private String name;
+	
 	@Column(name="Email")
+	@Email(message="Invalid Email address")
+	@NotNull
 	private String email;
+	
 	@Column(name="Password")
+	@NotNull
 	private String password;
+	
 	@Column(name="Phone")
+	@NotNull
 	private String phone;
 	/**
 	 * 

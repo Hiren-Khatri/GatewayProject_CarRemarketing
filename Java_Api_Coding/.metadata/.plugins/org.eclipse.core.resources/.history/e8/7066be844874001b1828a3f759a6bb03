@@ -1,0 +1,10 @@
+package com.gateway.traineeproject.model;
+
+public class ModelMaster
+{
+	public int Id;
+	public String Name;
+	public String ShortDiscription;
+	public String ModelYear;
+	public int BrandId;
+}

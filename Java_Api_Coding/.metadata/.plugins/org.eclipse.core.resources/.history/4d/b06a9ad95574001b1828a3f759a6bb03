@@ -1,0 +1,26 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gateway.traineeproject.model.ModelMaster;
+import com.gateway.traineeproject.repository.ModelRepository;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Service
+public class ModelMasterService {
+	@Autowired
+	private ModelRepository modelRepository;
+	
+	public List<ModelMaster> getAllModels() {
+		return modelRepository.findAll();
+	}
+}

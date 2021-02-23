@@ -43,9 +43,8 @@ public class JwtController {
 		try {
 			this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequest.getUsername(),jwtRequest.getPassword()));
 		} catch (UsernameNotFoundException|BadCredentialsException e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			throw new Exception("Bad Credentials");
+			throw new BadCredentialsException("Bad Credentials");
 		}
 		
 		//fine area

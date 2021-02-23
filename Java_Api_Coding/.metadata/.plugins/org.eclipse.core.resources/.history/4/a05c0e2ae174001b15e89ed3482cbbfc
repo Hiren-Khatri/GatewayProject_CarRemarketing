@@ -1,0 +1,87 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.gateway.traineeproject.model.ModelMaster;
+import com.gateway.traineeproject.model.VehicleMaster;
+import com.gateway.traineeproject.repository.VehicleRepository;
+
+import javassist.NotFoundException;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Service
+public class VehicleMasterService {
+	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+	
+	@GetMapping("api/vehicles/")
+	public List<VehicleMaster> findAll(){
+		return vehicleRepository.findAll();
+	}
+	
+	@GetMapping("/api/vehicles/{id}")
+	public ResponseEntity<VehicleMaster> getVehicle(@PathVariable Long id) throws NotFoundException {
+		Optional<VehicleMaster> foundVehicle = vehicleRepository.findById(id);
+
+		if (!foundVehicle.isPresent()) {
+			throw new NotFoundException("Brand not found with id: " + id);
+		}
+
+		VehicleMaster vehicle = foundVehicle.get();
+
+		return ResponseEntity.ok(vehicle);
+	}
+	
+	@RequestMapping(value = "/api/vehicles", method = RequestMethod.POST)
+	public ResponseEntity<ModelMaster> createVehicle(@RequestBody ModelMaster modelToBeSaved) throws URISyntaxException {
+		try {
+			ModelMaster model = modelMasterService.save(modelToBeSaved);
+			return ResponseEntity.created(new URI("/api/models/" + model.getId())).body(model);
+		} catch (EntityExistsException e) {
+			return new ResponseEntity<ModelMaster>(HttpStatus.CONFLICT);
+		}
+	}
+	
+	@RequestMapping(value = "/api/vehicles", method = RequestMethod.PUT)
+	public ResponseEntity<ModelMaster> updateVehicle(@RequestBody ModelMaster modelToBeUpdated) throws URISyntaxException {
+		try {
+			ModelMaster model = modelMasterService.update(modelToBeUpdated);
+			return ResponseEntity.created(new URI("/api/models/" + model.getId())).body(model);
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<ModelMaster>(HttpStatus.CONFLICT);
+		}
+	}
+
+	@RequestMapping(value = "/api/vehicles/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
+		try {
+			modelMasterService.delete(id);
+			return ResponseEntity.ok().build();
+		} catch (EntityNotFoundException e) {
+			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}
+	
+}

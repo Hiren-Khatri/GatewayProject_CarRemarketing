@@ -1,0 +1,20 @@
+package com.gateway.traineeproject.model;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+public class ModelMaster
+{
+	@Column(name="Id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(name="name")
+	private String Name;
+	@Column(name="shortDiscription")
+	private String ShortDiscription;
+	@Column(name="modelYear")
+	private String ModelYear;
+	
+	
+}

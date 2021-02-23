@@ -25,7 +25,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 	
-	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+	public static final long JWT_TOKEN_VALIDITY =  1000 * 60 * 60 * 10;
 
 	private String SECRET_KEY = "secret";
 
@@ -62,7 +62,7 @@ public class JwtUtil {
 	private String createToken(Map<String, Object> claims, String subject) {
 
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+				.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 

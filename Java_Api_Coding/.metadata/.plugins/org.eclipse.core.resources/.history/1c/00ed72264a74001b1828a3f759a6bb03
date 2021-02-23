@@ -1,0 +1,26 @@
+package com.gateway.traineeproject.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class ModelMaster
+{
+	@Column(name="Id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(name="name")
+	private String Name;
+	@Column(name="shortDiscription")
+	private String ShortDiscription;
+	@Column(name="modelYear")
+	private String ModelYear;
+	
+	@ManyToOne
+	@JoinColumn(name="BrandId",referencedColumnName = "Id")
+	private Brand brand;
+}

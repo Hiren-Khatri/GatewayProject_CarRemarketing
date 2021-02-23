@@ -1,0 +1,73 @@
+package com.gateway.traineeproject.model;
+
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Entity
+public class VehicleMaster
+{	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int id;
+	@Column(name = "VINNum")
+	public String vINNum;
+	
+	@Column(name="LicencePlate")
+	public String licencePlate;
+	
+	@Column(name="AverageUsage")
+	public String averageUsage;
+	
+	@Column(name="Kilometers")
+	public long kilometers;
+	
+	@Column(name="SeatingCapicity")
+	public int seatingCapicity;
+	
+	@Column(name="Engine")
+	public String engine;
+	
+	@Column(name="BodyType")
+	public String bodyType;
+	
+	@Column(name="FuelType")
+	public String fuelType;
+	
+	@Column(name="NumOfAirbags")
+	public int numOfAirbags;
+	
+	@Column(name="NumOfDoors")
+	public int numOfDoors;
+	
+	@Column(name="VehicleConfiguration")
+	public String vehicleConfiguration;
+	
+	@Column(name="Wheelbase")
+	public String wheelbase;
+	
+	@Column(name="Color")
+	public String color;
+	
+	@Column(name="FuelCapacity")
+	public long fuelCapacity;
+	
+	@Column(name="CargoVolume")
+	public long cargoVolume;
+	
+	@Column(name="SalesPrice")
+	public double salesPrice;
+
+	@ManyToOne
+	@JoinColumn(name = "ModelId",referencedColumnName = "Id")
+	private ModelMaster modelMaster;
+}

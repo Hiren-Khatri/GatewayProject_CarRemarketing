@@ -1,0 +1,18 @@
+package com.gateway.traineeproject.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
+@Entity
+public class Brand
+{
+	@Column(name = "Id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public int id;
+	@Column(name="Name")
+	public String name;
+	@Column(name="ShortDiscription")
+	public String shortDiscription;
+}

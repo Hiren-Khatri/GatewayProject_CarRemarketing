@@ -1,0 +1,25 @@
+package com.gateway.traineeproject.model;
+
+import java.math.BigDecimal;
+
+public class VehicleMaster
+{
+	public int id;
+	public String vINNum;
+	public String licencePlate;
+	public String averageUsage;
+	public long kilometers;
+	public BigDecimal seatingCapicity;
+	public String engine;
+	public String bodyType;
+	public String fuelType;
+	public BigDecimal numOfAirbags;
+	public BigDecimal numOfDoors;
+	public String vehicleConfiguration;
+	public String wheelbase;
+	public String color;
+	public long fuelCapacity;
+	public long cargoVolume;
+	public BigDecimal salesPrice;
+	public int modelid;
+}

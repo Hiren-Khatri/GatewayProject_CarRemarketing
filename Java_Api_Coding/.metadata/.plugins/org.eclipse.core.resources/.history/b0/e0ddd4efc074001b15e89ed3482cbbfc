@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.gateway.traineeproject.model.ModelMaster;
+import com.gateway.traineeproject.service.ModelMasterService;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+public class ModelMasterController {
+
+	@Autowired
+	private ModelMasterService modelMasterService;
+	
+	@GetMapping("/api/models")
+	public List<ModelMaster> getAllModels(){
+		return modelMasterService.findAll();
+	}
+}

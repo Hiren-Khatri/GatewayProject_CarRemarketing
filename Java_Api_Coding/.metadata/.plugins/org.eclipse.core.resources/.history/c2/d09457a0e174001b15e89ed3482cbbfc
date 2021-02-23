@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.gateway.traineeproject.model.VehicleMaster;
+import com.gateway.traineeproject.service.VehicleMasterService;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@RestController
+public class VehicleMasterController {
+	
+	@Autowired
+	private VehicleMasterService vehicleMasterService;
+	
+	@GetMapping("/api/vehicles")
+	public List<VehicleMaster> getAllVehicles(){
+		return vehicleMasterService.findAll();
+	}
+}

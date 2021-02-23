@@ -1,0 +1,64 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityExistsException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.gateway.traineeproject.model.Brand;
+import com.gateway.traineeproject.service.BrandService;
+
+import javassist.NotFoundException;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+
+@RestController
+public class BrandController {
+	@Autowired
+	private BrandService brandService;
+	
+	
+	@GetMapping("/api/brands")
+	public List<Brand> getAllBrands(){
+		return brandService.findAll();
+	}
+	
+	@GetMapping("/api/brands/{id}")
+	public ResponseEntity<Brand> getBrand(@PathVariable Long id) throws NotFoundException{
+		Optional<Brand> foundBrand = brandService.findById(id);
+		
+		if(!foundBrand.isPresent()) {
+			throw new NotFoundException("Brand not found with id: "+id);
+		}
+		
+		Brand brand = foundBrand.get();
+		
+		return ResponseEntity.ok(brand);
+	}
+	
+	@RequestMapping(name = "/api/brands",method = RequestMethod.POST)
+	public ResponseEntity<Brand> createBrand(@RequestBody Brand brandToBeSaved){
+		try {
+			Brand brand = brandService.save(brandToBeSaved);
+			return ResponseEntity.ok(brand);
+		}catch (EntityExistsException e) {
+			return new ResponseEntity<Brand>(HttpStatus.CONFLICT);
+		}
+	}
+}

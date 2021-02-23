@@ -1,0 +1,15 @@
+/**
+ * 
+ */
+package com.gateway.traineeproject.service;
+
+import org.springframework.stereotype.Service;
+
+/**
+ * @author Hiren Khatri
+ *
+ */
+@Service
+public class BrandService {
+
+}

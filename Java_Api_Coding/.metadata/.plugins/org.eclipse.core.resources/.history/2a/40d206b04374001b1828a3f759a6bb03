@@ -1,0 +1,5 @@
+package com.gateway.traineeproject.model;
+
+public class VehicleMaster {
+
+}
