@@ -24,7 +24,7 @@ export class Vehicle {
     licencePlate: string;
     averageUsage: string;
     kilometers: number;
-    seatingCapacity: number;
+    seatingCapicity: number;
     engine: string;
     bodyType: string;
     fuelType: string;

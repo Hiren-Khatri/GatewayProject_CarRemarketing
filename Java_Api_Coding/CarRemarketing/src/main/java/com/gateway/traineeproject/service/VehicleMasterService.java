@@ -9,6 +9,7 @@ import java.util.Optional;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +38,31 @@ public class VehicleMasterService {
 		if(vehicleRepository.existsById(vehicleToBeSaved.getId())) {
 			throw new EntityExistsException("There is already existing entity with such ID in the database.");
 		}
+		if (vehicleRepository.existsByvINNum(vehicleToBeSaved.getvINNum())
+				) {
+			throw new ConstraintViolationException("There is already existing entity with same VIN number in the database.",
+					null, null);
+		}
+		if (vehicleRepository.existsByLicencePlate(vehicleToBeSaved.getLicencePlate())
+				) {
+			throw new ConstraintViolationException("There is already existing entity with same Licence Plate  in the database.",
+					null, null);
+		}
+	
 		return vehicleRepository.save(vehicleToBeSaved);
 	}
 	
 	public VehicleMaster update(VehicleMaster vehicleToBeUpdated) {
 		if(!vehicleRepository.existsById(vehicleToBeUpdated.getId())) {
 			throw new EntityNotFoundException("There is no existing entity with such ID in the database.");
+		}
+		if(vehicleRepository.existsByvINNum(vehicleToBeUpdated.getvINNum()) && 
+				!vehicleRepository.existsByvINNumAndId(vehicleToBeUpdated.getvINNum(), vehicleToBeUpdated.getId())) {
+			throw new EntityExistsException("There is already existing entity with same VIN number in the database.");
+		}
+		if(vehicleRepository.existsByLicencePlate(vehicleToBeUpdated.getLicencePlate()) && 
+				!vehicleRepository.existsByLicencePlateAndId(vehicleToBeUpdated.getLicencePlate(), vehicleToBeUpdated.getId())) {
+			throw new EntityExistsException("There is already existing entity with same Licence plate number in the database.");
 		}
 		return vehicleRepository.save(vehicleToBeUpdated);
 	}

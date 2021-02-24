@@ -12,6 +12,7 @@ import java.util.Optional;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +67,7 @@ public class VehicleMasterController {
 	}
 
 	@RequestMapping(value = "/api/vehicles", method = RequestMethod.POST)
-	public ResponseEntity<VehicleMaster> createModel(@RequestBody VehicleMaster vehicleToBeSaved)
+	public ResponseEntity<?> createModel(@RequestBody VehicleMaster vehicleToBeSaved)
 			throws URISyntaxException {
 		try {
 			
@@ -83,11 +84,15 @@ public class VehicleMasterController {
 			return ResponseEntity.created(new URI("/api/models/" + vehicle.getId())).body(vehicle);
 		} catch (EntityExistsException e) {
 			return new ResponseEntity<VehicleMaster>(HttpStatus.CONFLICT);
+		}catch (ConstraintViolationException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong! Please try again!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@RequestMapping(value = "/api/vehicles", method = RequestMethod.PUT)
-	public ResponseEntity<VehicleMaster> updateModel(@RequestBody VehicleMaster vehicleToBeUpdated)
+	public ResponseEntity<?> updateModel(@RequestBody VehicleMaster vehicleToBeUpdated)
 			throws URISyntaxException {
 		try {
 			Brand brand = new Brand();
@@ -103,16 +108,22 @@ public class VehicleMasterController {
 			return ResponseEntity.created(new URI("/api/models/" + vehicle.getId())).body(vehicle);
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<VehicleMaster>(HttpStatus.CONFLICT);
+		}catch (EntityExistsException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong! Please try again!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@RequestMapping(value = "/api/vehicles/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteModel(@PathVariable Long id) throws NotFoundException {
+	public ResponseEntity<?> deleteModel(@PathVariable Long id) throws NotFoundException {
 		try {
 			vehicleMasterService.delete(id);
 			return ResponseEntity.ok().build();
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+		}catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong! Please try again!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AlertModule } from './_alert';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {A11yModule} from '@angular/cdk/a11y';
@@ -81,6 +82,7 @@ import { ModelDetailsComponent } from './Components/model-details/model-details.
   ],
   imports: [
     BrowserModule,
+    AlertModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     A11yModule,

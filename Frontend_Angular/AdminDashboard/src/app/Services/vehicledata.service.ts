@@ -41,25 +41,25 @@ export class VehicledataService {
 
   createBrand(brand): Observable<Brand> {
     return this.httpClient.post<Brand>(this.vehicles + '/brands/', JSON.stringify(brand), this.httpOptions )
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
   }
   
   updateBrand( brand): Observable<Brand> {
 
     return this.httpClient.put<Brand>(this.vehicles + '/brands/' , JSON.stringify(brand), this.httpOptions)
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
 
   }
 
   deleteBrand(id) {
     return this.httpClient.delete(this.vehicles + '/brands/' + id, this.httpOptions)
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
   }
 
   getAllModels(): Observable<Model[]> {
@@ -78,27 +78,31 @@ export class VehicledataService {
           )
   }
 
+  getModelsFromBrand(brandId){
+    return this.httpClient.get<Model[]>(this.vehicles+'/modelsFromBrand/?brand='+brandId)
+  }
+
   createModel(model): Observable<Model> {
     return this.httpClient.post<Model>(this.vehicles + '/models/', JSON.stringify(model), this.httpOptions )
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
   }
   
   updateModel( model): Observable<Model> {
 
     return this.httpClient.put<Model>(this.vehicles + '/models/' , JSON.stringify(model), this.httpOptions)
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
 
   }
 
   deleteModel(id) {
     return this.httpClient.delete(this.vehicles + '/models/' + id, this.httpOptions)
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
   }
 
   getAllVehicles(): Observable<Vehicle[]> {
@@ -119,25 +123,25 @@ export class VehicledataService {
 
   createVehicle(vehicle): Observable<Brand> {
     return this.httpClient.post<Vehicle>(this.vehicles + '/vehicles/', JSON.stringify(vehicle), this.httpOptions )
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
   }
   
   updateVehicle( vehicle): Observable<Vehicle> {
 
     return this.httpClient.put<Vehicle>(this.vehicles + '/vehicles/' , JSON.stringify(vehicle), this.httpOptions)
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
 
   }
 
   deleteVehicle(id) {
     return this.httpClient.delete(this.vehicles + '/vehicles/' + id, this.httpOptions)
-          .pipe(
-            catchError(this.errorHandler)
-          )
+          // .pipe(
+          //   catchError(this.errorHandler)
+          // )
   }
 
   

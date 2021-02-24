@@ -5,12 +5,14 @@ package com.gateway.traineeproject.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gateway.traineeproject.model.Brand;
@@ -44,6 +47,17 @@ public class ModelMasterController {
 		return modelMasterService.findAll();
 	}
 	
+	@RequestMapping(value = "/api/modelsFromBrand",method = RequestMethod.GET)
+	public List<ModelMaster> getModelsByBrand(@RequestParam("brand") long id){
+		List<ModelMaster> modelsByBrand = new ArrayList<ModelMaster>();
+		for (ModelMaster modelMaster : modelMasterService.findAll()) {
+			if(modelMaster.getBrand().getId() == id) {
+				modelsByBrand.add(modelMaster);
+			}
+		}
+		return modelsByBrand;
+	}
+	
 	@GetMapping("/api/models/{id}")
 	public ResponseEntity<ModelMaster> getModel(@PathVariable Long id) throws NotFoundException {
 		Optional<ModelMaster> foundBrand = modelMasterService.findById(id);
@@ -58,7 +72,7 @@ public class ModelMasterController {
 	}
 	
 	@RequestMapping(value = "/api/models", method = RequestMethod.POST)
-	public ResponseEntity<ModelMaster> createModel(@RequestBody ModelMaster modelToBeSaved) throws URISyntaxException {
+	public ResponseEntity<?> createModel(@RequestBody ModelMaster modelToBeSaved) throws URISyntaxException {
 		try {
 			
 			long brandId = modelToBeSaved.getBrandId();
@@ -70,11 +84,15 @@ public class ModelMasterController {
 			return ResponseEntity.created(new URI("/api/models/" + model.getId())).body(model);
 		} catch (EntityExistsException e) {
 			return new ResponseEntity<ModelMaster>(HttpStatus.CONFLICT);
+		}catch (ConstraintViolationException e) {
+			return new ResponseEntity<>("Model with name "+modelToBeSaved.getName()+" is already stored!",HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong! Please try again!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@RequestMapping(value = "/api/models", method = RequestMethod.PUT)
-	public ResponseEntity<ModelMaster> updateModel(@RequestBody ModelMaster modelToBeUpdated) throws URISyntaxException {
+	public ResponseEntity<?> updateModel(@RequestBody ModelMaster modelToBeUpdated) throws URISyntaxException {
 		try {
 			
 			long brandId = modelToBeUpdated.getBrandId();
@@ -86,16 +104,24 @@ public class ModelMasterController {
 			return ResponseEntity.created(new URI("/api/models/" + model.getId())).body(model);
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<ModelMaster>(HttpStatus.CONFLICT);
+		}catch (EntityExistsException e) {
+			return new ResponseEntity<>("Model with name "+modelToBeUpdated.getName()+" is already stored!",HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong! Please try again!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@RequestMapping(value = "/api/models/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteModel(@PathVariable Long id) {
+	public ResponseEntity<?> deleteModel(@PathVariable Long id) {
 		try {
 			modelMasterService.delete(id);
 			return ResponseEntity.ok().build();
 		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+		}catch (ConstraintViolationException e) {
+			return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+		}catch (Exception e) {
+			return new ResponseEntity<>("Something went wrong! Please try again!!",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

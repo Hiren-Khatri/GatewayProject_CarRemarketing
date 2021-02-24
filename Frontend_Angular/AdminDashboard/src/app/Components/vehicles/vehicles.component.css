@@ -33,6 +33,28 @@
   max-width: 124px;
 } */
 
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 25%;
+}
+
+mat-paginator {
+  width: 50%;
+}
+
+td, th {
+  width: 20%;
+}
+
+.main-container {
+  margin-top: 25px;
+  margin-left: 25px;
+}
+
 .card{
 
   cursor: pointer;
