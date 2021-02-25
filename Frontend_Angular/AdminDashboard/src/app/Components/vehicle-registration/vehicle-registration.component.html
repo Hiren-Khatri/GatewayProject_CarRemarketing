@@ -8,8 +8,9 @@
     </div>
   </div>
   <div class="main-wrappxper" fxLayout="row" fxLayoutAlign="start">
-    <form [formGroup]="registerForm" class="example-form">
+    <form [formGroup]="registerForm" class="example-form" >
       <div class="example-container" fxLayoutGap="32px">
+
         <mat-form-field appearance="fill" [style.width.px]="327">
           <mat-label>Brand</mat-label>
           <mat-select formControlName="brandId" [(ngModel)]="brandId" (selectionChange)="loadModel($event.value)">
@@ -100,6 +101,9 @@
           <mat-error *ngIf="hasError('kilometers', 'required')"
           > Kilometers is required</mat-error
           >
+          <mat-error *ngIf="hasError('kilometers', 'pattern')"
+          > Only numbers</mat-error
+          >
         </mat-form-field>
         <mat-form-field appearance="fill" [style.width.px]="327">
           <mat-label>Seating Capacity</mat-label>
@@ -122,6 +126,9 @@
            <mat-hint align="end">required*</mat-hint>
           <mat-error *ngIf="hasError('seatingCapacity', 'required')"
           >Seating Capacity is required</mat-error
+          >
+          <mat-error *ngIf="hasError('seatingCapacity', 'pattern')"
+          >Only numbers</mat-error
           >
         </mat-form-field>
       </div>
@@ -183,19 +190,12 @@
             formControlName="numOfAirbags"
             [(ngModel)]="vehicle.numOfAirbags"
           />
-          <!-- <mat-select
-          formControlName="numOfAirbags"
-          [(ngModel)]="vehicle.numOfAirbags"
-        >
-          <mat-option value="2">2</mat-option>
-          <mat-option value="4">4</mat-option>
-          <mat-option value="6">6</mat-option>
-          <mat-option value="8">8</mat-option>
-          <mat-option value="10">10</mat-option>
-        </mat-select> -->
            <mat-hint align="end">required*</mat-hint>
           <mat-error *ngIf="hasError('numOfAirbags', 'required')"
           >Number Of Airbags is required</mat-error
+          >
+          <mat-error *ngIf="hasError('numOfAirbags', 'pattern')"
+          >Only numbers</mat-error
           >
         </mat-form-field>
       </div>
@@ -220,6 +220,9 @@
            <mat-hint align="end">required*</mat-hint>
           <mat-error *ngIf="hasError('numOfDoors', 'required')"
           >Number Of Door is required</mat-error
+          >
+          <mat-error *ngIf="hasError('numOfDoors', 'pattern')"
+          >Only numbers</mat-error
           >
         </mat-form-field>
         <mat-form-field appearance="fill" [style.width.px]="327">
@@ -278,6 +281,9 @@
           <mat-error *ngIf="hasError('fuelCapacity', 'required')"
           >Fuel Capacity is required</mat-error
           >
+          <mat-error *ngIf="hasError('fuelCapacity', 'pattern')"
+          >Only numbers</mat-error
+          >
         </mat-form-field>
         <mat-form-field appearance="fill" [style.width.px]="327">
           <mat-label>Cargo Volume</mat-label>
@@ -290,6 +296,9 @@
            <mat-hint align="end">required*</mat-hint>
           <mat-error *ngIf="hasError('cargoVolume', 'required')"
           >Cargo Volume is required</mat-error
+          >
+          <mat-error *ngIf="hasError('cargoVolume', 'pattern')"
+          >Only numbers</mat-error
           >
         </mat-form-field>
       </div>
@@ -309,6 +318,9 @@
            <mat-hint align="end">required*</mat-hint>
           <mat-error *ngIf="hasError('salesPrice', 'required')"
           >SalesPricee is required</mat-error
+          >
+          <mat-error *ngIf="hasError('salesPrice', 'pattern')"
+          >Only numbers</mat-error
           >
         </mat-form-field>
       </div>

@@ -66,7 +66,6 @@ import { BrandsComponent } from './Components/brands/brands.component';
 import { ModelDetailsComponent } from './Components/model-details/model-details.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -47,7 +47,7 @@ mat-paginator {
 }
 
 td, th {
-  width: 20%;
+  width: auto;
 }
 
 .main-container {

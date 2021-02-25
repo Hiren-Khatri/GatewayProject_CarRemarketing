@@ -51,39 +51,39 @@ export interface IBrand {
   shortDiscription: string;
 }
 
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
+// const NAMES: string[] = [
+//   'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
+//   'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
+// ];
 
 @Component({
   selector: 'app-vehicles',
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.css'],
 })
-export class VehiclesComponent implements OnInit, AfterViewInit {
+export class VehiclesComponent implements OnInit {
   vehicles: any[];
 
   displayedColumns: string[] = [
+    'id',
     'vINNum',
     'licencePlate',
     'salesPrice',
     'BrandId',
     'ModelId',
     'fuelType',
-    'color',
-    'id'
+    'color'
   ];
   dataSource: MatTableDataSource<IVehicle>;
   selection: SelectionModel<IVehicle>;
 
-  name: any = null;
+  name = '';
 
   filterCheckboxes: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
     []
   );
 
-  nameList: string[] = NAMES;
+  nameList: string[]=[] ;
   names = new FormControl();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -95,18 +95,32 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
     private alertService: AlertService
   ) {}
 
-  ngAfterViewInit(): void {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-  }
-
   ngOnInit(): void {
+
+    this.vehicleServie.getAllBrands().subscribe((data:any[]) => {
+      data.forEach(element => {
+        this.nameList.push(element.name)
+      })
+    })
+
     this.vehicleServie.getAllVehicles().subscribe((data: any) => {
       this.vehicles = data;
       console.log(this.vehicles);
       this.dataSource = new MatTableDataSource(this.vehicles);
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch(property) {
+          case 'ModelId': return item.modelMaster.name;
+          case 'BrandId': return item.modelMaster.brand.name;
+          default: return item[property];
+        }
+      };
+
+      this.dataSource.filterPredicate = (data, filter) => {
+        const dataStr = data.modelMaster.name + data.modelMaster.brand.name ;
+        return dataStr.indexOf(filter) != -1; 
+      }
+
       this.selection = new SelectionModel(true, []);
-      console.log('datasource', this.dataSource);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
@@ -156,6 +170,9 @@ export class VehiclesComponent implements OnInit, AfterViewInit {
       row.id + 1
     }`;
   }
+
+
+
 
   onEdit(id) {
     this.route.navigate(['/addvehicle', id]);

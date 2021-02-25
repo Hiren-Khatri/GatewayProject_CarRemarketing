@@ -18,3 +18,21 @@ textarea{
     top: 0; /* Sets the sticky toolbar to be on top */
     z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
 }
+
+
+table {
+  width: 100%;
+}
+
+mat-form-field {
+  font-size: 14px;
+  width: 25%;
+}
+
+mat-paginator {
+  width: 50%;
+}
+
+td, th {
+  width: auto;
+}

@@ -70,19 +70,33 @@ export class VehicleRegistrationComponent implements OnInit {
         this.licencePlateValidator,
       ]),
       averageUsage: new FormControl('', [Validators.required]),
-      kilometers: new FormControl('', [Validators.required]),
-      seatingCapacity: new FormControl('', [Validators.required]),
+      kilometers: new FormControl('', [Validators.required,
+      Validators.pattern('^[0-9]*$')
+      ]),
+      seatingCapacity: new FormControl('', [Validators.required,
+        Validators.pattern('^[0-9]*$')
+        ]),
       engine: new FormControl('', [Validators.required]),
       bodyType: new FormControl('', [Validators.required]),
       fuelType: new FormControl('', [Validators.required]),
-      numOfAirbags: new FormControl('', [Validators.required]),
-      numOfDoors: new FormControl('', [Validators.required]),
+      numOfAirbags:  new FormControl('', [Validators.required,
+        Validators.pattern('^[0-9]*$')
+        ]),
+      numOfDoors:  new FormControl('', [Validators.required,
+        Validators.pattern('^[0-9]*$')
+        ]),
       vehicleConfiguration: new FormControl('', [Validators.required]),
       wheelbase: new FormControl('', [Validators.required]),
       color: new FormControl('', [Validators.required]),
-      fuelCapacity: new FormControl('', [Validators.required]),
-      cargoVolume: new FormControl('', [Validators.required]),
-      salesPrice: new FormControl('', [Validators.required]),
+      fuelCapacity: new FormControl('', [Validators.required,
+        Validators.pattern('^[0-9]*$')
+        ]),
+      cargoVolume:  new FormControl('', [Validators.required,
+        Validators.pattern('^[0-9]*$')
+        ]),
+      salesPrice:  new FormControl('', [Validators.required,
+        Validators.pattern('^[0-9]*$')
+        ]),
     });
   }
 
@@ -122,15 +136,16 @@ export class VehicleRegistrationComponent implements OnInit {
     return this.registerForm.controls[controlName].hasError(errorName);
   };
 
-  loadModel(brandId){
-    this.vehicleService.getModelsFromBrand(brandId)
-    .subscribe((data:any[]) => {
-      this.models = data;
-    },error => {
-      console.log(error);
-      this.alertService.error(error.error)
-    }
-    )
+  loadModel(brandId) {
+    this.vehicleService.getModelsFromBrand(brandId).subscribe(
+      (data: any[]) => {
+        this.models = data;
+      },
+      (error) => {
+        console.log(error);
+        this.alertService.error(error.error);
+      }
+    );
   }
 
   onSubmit() {
@@ -138,13 +153,13 @@ export class VehicleRegistrationComponent implements OnInit {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
 
-      this.vehicleService
-        .createVehicle(this.registerForm.value)
-        .subscribe(
-          (res) => {
+      this.vehicleService.createVehicle(this.registerForm.value).subscribe(
+        (res) => {
           console.log('Vehicle registered successfully!');
-        },error =>{
-          console.log(error)
+          this.alertService.success('Vehicle registered successfully!');
+        },
+        (error) => {
+          console.log(error);
           // if(error.status == 409){
           //   // alert("The brand with same name already exists!")
           //   this.alertService.error("The brand with same name already exists!")
@@ -153,7 +168,7 @@ export class VehicleRegistrationComponent implements OnInit {
           // }
           this.alertService.error(error.error);
         }
-        );
+      );
     }
   }
 
@@ -178,22 +193,24 @@ export class VehicleRegistrationComponent implements OnInit {
       this.vehicle.cargoVolume = this.registerForm.value.cargoVolume;
       this.vehicle.salesPrice = this.registerForm.value.salesPrice;
 
-      this.vehicleService.updateVehicle(this.vehicle).subscribe((res) => {
-        console.log(res);
-        this.alertService.success("Model updated successfully!")
-      },error =>{
-        console.log(error)
-        // if(error.status == 409){
-        //   // alert("The brand with same name already exists!")
-        //   this.alertService.error("The brand with same name already exists!")
-        // }else{
-        //   this.alertService.error(error.message)
-        // }
-        this.alertService.error(error.error);
-      }
+      this.vehicleService.updateVehicle(this.vehicle).subscribe(
+        (res) => {
+          console.log(res);
+          this.alertService.success('Vehicle updated successfully!');
+        },
+        (error) => {
+          console.log(error);
+          // if(error.status == 409){
+          //   // alert("The brand with same name already exists!")
+          //   this.alertService.error("The brand with same name already exists!")
+          // }else{
+          //   this.alertService.error(error.message)
+          // }
+          this.alertService.error(error.error);
+        }
       );
-    }else{
-      console.log(this.registerForm.errors)
+    } else {
+      console.log(this.registerForm.errors);
     }
   }
 }
